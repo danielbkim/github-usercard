@@ -11,9 +11,24 @@ import axios from 'axios';
 
 axios
   .get('https://api.github.com/users/danielbkim')
-  .then((promiseData) => {
+  .then((response) => {
     // console.log(promiseData);
-    userCard(promiseData)
+    // const card = userCard(promiseData);
+    const cards = document.querySelector('.cards');
+    // console.log(cards);
+    const card = userCard(response);
+    // console.log(card)
+
+
+    cards.innerHTML = card;
+    console.log(cards);
+
+    // cardDiv.appendChild(card);
+    // parentDiv.appendChild(cardDiv);
+    // console.log(response);
+    // console.log(userCard(promiseData));
+    // console.log(userCard(response));
+
   })
   .catch((err) => {
     console.log(err);
@@ -48,7 +63,7 @@ axios
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -70,6 +85,9 @@ const followersArray = [];
     </div>
 */
 
+
+// const card = function()
+
 const userCard = function(obj){
   const data = obj.data;
   return `<div class="card">
@@ -87,6 +105,22 @@ const userCard = function(obj){
   </div>
 </div>`
 };
+
+// const userCard = function(obj) {
+
+//   let newDiv = document.createElement('div');
+//   let newImg = document.createElement('img');
+//   let newParagraph = document.createElement('p');
+
+//   newDiv.classList.add('card');
+
+//   let img
+//   newDiv.appendChild(newImg);
+
+//   console.log(newDiv);
+
+
+// };
 
 
 
