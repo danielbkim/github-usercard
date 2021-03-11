@@ -1,8 +1,28 @@
+import axios from 'axios';
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+// const githubPage = axios.get('https://api.github.com/users/danielbkim');
+// console.log(githubPage);
+
+axios
+  .get('https://api.github.com/users/danielbkim')
+  .then((promiseData) => {
+    // console.log(promiseData);
+    userCard(promiseData)
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// githubPage.then((promiseData) => {
+
+// });
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -49,6 +69,26 @@ const followersArray = [];
       </div>
     </div>
 */
+
+const userCard = function(obj){
+  const data = obj.data;
+  return `<div class="card">
+  <img src=${data.avatar_url} />
+  <div class="card-info">
+    <h3 class="name">${data.name}</h3>
+    <p class="username">${data.login}</p>
+    <p>Location: ${data.location}</p>
+    <p>Profile:
+      <a href=${data.html_url}>${data.html_url}</a>
+    </p>
+    <p>Followers: ${data.followers}</p>
+    <p>Following: ${data.following}</p>
+    <p>Bio: ${data.bio}</p>
+  </div>
+</div>`
+};
+
+
 
 /*
   List of LS Instructors Github username's:
