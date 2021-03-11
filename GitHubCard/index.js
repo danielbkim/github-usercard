@@ -9,23 +9,25 @@ import axios from 'axios';
 // const githubPage = axios.get('https://api.github.com/users/danielbkim');
 // console.log(githubPage);
 
-axios
-  .get('https://api.github.com/users/danielbkim')
+const followersArray = ['danielbkim', 'tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach(function(username){
+  axios
+  .get(`https://api.github.com/users/${username}`)
   .then((response) => {
+    // console.log(response);
     // console.log(promiseData);
     // const card = userCard(promiseData);
     const cards = document.querySelector('.cards');
     // console.log(cards);
-    const card = userCard(response);
+    const card = userCard(response.data);
     // console.log(card)
 
+    // cards.innerHTML = card;
+    // console.log(cards);
 
-    cards.innerHTML = card;
-    console.log(cards);
-
-    // cardDiv.appendChild(card);
+    cards.appendChild(card);
     // parentDiv.appendChild(cardDiv);
-    // console.log(response);
     // console.log(userCard(promiseData));
     // console.log(userCard(response));
 
@@ -33,6 +35,9 @@ axios
   .catch((err) => {
     console.log(err);
   });
+});
+
+
 
 // githubPage.then((promiseData) => {
 
@@ -63,7 +68,7 @@ axios
     user, and adding that card to the DOM.
 */
 
-const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+// const followersArray = ['danielbkim', 'tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -88,39 +93,68 @@ const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigkne
 
 // const card = function()
 
-const userCard = function(obj){
-  const data = obj.data;
-  return `<div class="card">
-  <img src=${data.avatar_url} />
-  <div class="card-info">
-    <h3 class="name">${data.name}</h3>
-    <p class="username">${data.login}</p>
-    <p>Location: ${data.location}</p>
-    <p>Profile:
-      <a href=${data.html_url}>${data.html_url}</a>
-    </p>
-    <p>Followers: ${data.followers}</p>
-    <p>Following: ${data.following}</p>
-    <p>Bio: ${data.bio}</p>
-  </div>
-</div>`
-};
-
-// const userCard = function(obj) {
-
-//   let newDiv = document.createElement('div');
-//   let newImg = document.createElement('img');
-//   let newParagraph = document.createElement('p');
-
-//   newDiv.classList.add('card');
-
-//   let img
-//   newDiv.appendChild(newImg);
-
-//   console.log(newDiv);
-
-
+// const userCard = function(obj){
+//   const data = obj.data;
+//   return `<div class="card">
+//   <img src=${data.avatar_url} />
+//   <div class="card-info">
+//     <h3 class="name">${data.name}</h3>
+//     <p class="username">${data.login}</p>
+//     <p>Location: ${data.location}</p>
+//     <p>Profile:
+//       <a href=${data.html_url}>${data.html_url}</a>
+//     </p>
+//     <p>Followers: ${data.followers}</p>
+//     <p>Following: ${data.following}</p>
+//     <p>Bio: ${data.bio}</p>
+//   </div>
+// </div>`
 // };
+
+const userCard = function(obj) {
+  let newCard = document.createElement('div');
+  let newImg = document.createElement('img');
+  let cardInfo = document.createElement('div');
+  let name = document.createElement('h3');
+  let username = document.createElement('p');
+  let location = document.createElement('p');
+  let profile = document.createElement('p');
+  let url = document.createElement('a');
+  let followers = document.createElement('p');
+  let following = document.createElement('p');
+  let bio = document.createElement('p');
+  
+  newCard.classList.add('card');
+  newImg.setAttribute('src', obj.avatar_url);
+  newCard.appendChild(newImg);
+  cardInfo.classList.add('card-info');
+  newCard.appendChild(cardInfo);
+  name.innerHTML = obj.name;
+  name.classList.add('name');
+  cardInfo.appendChild(name);
+  username.innerHTML = obj.login;
+  username.classList.add('username');
+  cardInfo.appendChild(username);
+  location.innerHTML = `Location: ${obj.location}`;
+  cardInfo.appendChild(location);
+  profile.innerHTML = 'Profile:';
+  cardInfo.appendChild(profile);
+  url.setAttribute('href', obj.html_url);
+  url.innerHTML = obj.html_url;
+  profile.appendChild(url);
+  followers.innerHTML = obj.followers;
+  cardInfo.appendChild(followers);
+  following.innerHTML = obj.following;
+  cardInfo.appendChild(following);
+  bio.innerHTML = `Bio: ${obj.bio}`;
+  cardInfo.appendChild(bio);
+
+  console.log(obj)
+  console.log(newCard);
+
+  return newCard;
+
+};
 
 
 
